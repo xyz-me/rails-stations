@@ -1,0 +1,5 @@
+<h1>Edit Movie!</h1>
+
+<%= render "form", movie: [:admin, @movie], request_method: :put %>
+<%= link_to "Cancel", admin_movie_path(@movie.id)  %>
+<%= button_to "削除", [:admin, @movie], { method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } } %>
