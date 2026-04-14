@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # 一覧画面
   get "/movies", to: "movies#index"
-  resources :movies
+  get "/movies/:id", to: "movies#show"
+  resources :movies, :scadule
 
   # 座席画面
   get '/sheets', to: "sheets#index"

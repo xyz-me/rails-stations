@@ -29,4 +29,9 @@ class MoviesController < ApplicationController
       end
     end
   end
+
+  def show
+    @movie = Movie.find(params[:id])
+    @schedules = Schedule.where(movie_id: params[:id]).order(:start_time)
+  end
 end

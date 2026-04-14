@@ -39,7 +39,9 @@
         <tbody>
             <% @movies.each_with_index do |movie, i| %>
                 <tr>
-                    <th><%= movie.id %></th>
+                     <th>
+                        <%= link_to movie.id, movie_path(movie.id) %>
+                    </th>
                     <td><%= movie.name %></td>
                     <td><%= movie.year %></td>
                     <td><%= movie.description %></td>

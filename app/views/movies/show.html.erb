@@ -1,0 +1,46 @@
+<h1><%= @movie.name %></h1>
+
+<div id="movie">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">名前</th>
+                <th scope="col">公開年</th>
+                <th scope="col">説明</th>
+                <th scope="col">画像URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @movie.name %></td>
+                <td><%= @movie.year %></td>
+                <td><%= @movie.description %></td>
+                <td>
+                    <img src="<%= @movie.image_url %>">
+                </td>
+            </tr>
+        </tbody>     
+    </table>
+</div>
+
+<h2>スケジュール</h2>
+<div id="schedule">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">開始時間</th>
+                <th scope="col">終了時間</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @schedules.each_with_index do |movie_schedule, i| %>
+                <tr>
+                    <td><%= movie_schedule.start_time %></td>
+                    <td><%= movie_schedule.end_time %></td>
+                </tr>
+            <% end %>
+        </tbody>     
+    </table>
+</div>
+
+<%= link_to "Back", movies_path %>
