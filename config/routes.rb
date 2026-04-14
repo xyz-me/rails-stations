@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   get "/movies", to: "movies#index"
   resources :movies
 
+  # 座席画面
+  get '/sheets', to: "sheets#index"
+  resources :sheets
+
   namespace :admin do
     resources :movies
   end
