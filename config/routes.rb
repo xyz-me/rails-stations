@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   # 管理者画面
   ## 一覧画面
-  get "/admin/movies", to: "admin/movies#index"
+  get "/admin/movies", to: "admin/movies#show"
   
 
   ## 新規追加画面

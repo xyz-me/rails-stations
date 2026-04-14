@@ -1,10 +1,32 @@
 <h1>映画一覧</h1>
 
+<div id="search">
+    <%= form_with model: nil , method: :get do |form| %>
+        <div>
+            <%= form.label :keyword %>
+            <%= form.text_field :keyword , value: @keyword %>
+        </div>
+
+        <div>
+            <%= form.radio_button :is_showing, "1", :checked => @is_public == "1" ? true : false %>
+            <%= form.label :is_showing_true, "公開" %>
+
+            <%= form.radio_button :is_showing, "0", :checked => @is_public == "0" ? true : false %>
+            <%= form.label :is_showing_false, "非公開" %>
+
+            <%= form.radio_button :is_showing, "-1", :checked => (@is_public != "1" && @is_public != "0") ? true : false %>
+            <%= form.label :is_showing_none, "指定しない" %>
+        </div>
+
+        <div>
+            <%= form.submit %>
+        </div>
+        <% end %>
+
+</div>
+
 <div id="movies">
     <table>
-        <caption>
-            映画一覧
-        </caption>
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -17,7 +39,7 @@
         <tbody>
             <% @movies.each_with_index do |movie, i| %>
                 <tr>
-                    <th><%= i+1 %></th>
+                    <th><%= movie.id %></th>
                     <td><%= movie.name %></td>
                     <td><%= movie.year %></td>
                     <td><%= movie.description %></td>
