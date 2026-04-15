@@ -2,11 +2,13 @@ class Admin::MoviesController < ApplicationController
   # 表示
   def index
     @movies = Movie.all
+    @schedules = Schedule.all
   end
 
   # 表示
   def show
     @movie = Movie.find(params[:id])
+    @schedules = Schedule.where(movie_id: params[:id]).order(:start_time)
   end
 
   def new

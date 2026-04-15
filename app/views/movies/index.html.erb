@@ -39,13 +39,13 @@
         <tbody>
             <% @movies.each_with_index do |movie, i| %>
                 <tr>
-                     <th>
+                    <th>
                         <%= link_to movie.id, movie_path(movie.id) %>
                     </th>
                     <td><%= movie.name %></td>
                     <td><%= movie.year %></td>
                     <td><%= movie.description %></td>
-                    <td><%= movie.image_url %></td>
+                    <td><img src="<%= movie.image_url %>"></td>
                 </tr>
             <% end %>
         </tbody>     

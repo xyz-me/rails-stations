@@ -1,0 +1,31 @@
+<h1>上演スケジュール</h1>
+
+<div id="sheets">
+    <% if @movies.length > 0 %>
+        <% @movies.each_with_index do |movie, i| %>
+            <% if @movies[i].schedules.length > 0%>
+                <h2><%= movie.id %> | <%= movie.name %></h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">開始時間</th>
+                        <th scope="col">終了時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <% @movies[i].schedules.each_with_index do |schedule, i2| %>
+                        <tr>
+                            <td> <%= link_to schedule.id, admin_schedules_path(schedule.id) %></td>
+                            <td><%= schedule.start_time %></td>
+                            <td><%= schedule.end_time %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>    
+                </table> 
+            <% end %>        
+        <% end %>
+    <% else %> 
+        データが存在しません   
+    <% end %>
+</div>
