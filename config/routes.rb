@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
+
   get 'reservations/index'
   # 一覧画面
   #get "/movies", to: "movies#index"
