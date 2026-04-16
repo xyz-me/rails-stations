@@ -1,8 +1,23 @@
 Rails.application.routes.draw do
+  get 'reservations/index'
   # 一覧画面
-  get "/movies", to: "movies#index"
-  get "/movies/:id", to: "movies#show"
-  resources :movies, :schedule
+  #get "/movies", to: "movies#index"
+  #get "/movies/:id", to: "movies#show"
+  #get "/movies/:movie_id/schedules/:schedule_id/reservations/new", to:"movies#new"
+
+  # 表画面
+
+  get "movies/:id/reservations", to: "movies#reservation"
+  get "movies/:id/reservation", to: "movies#reservation"
+  resources :movies do
+    resources :reservations do
+      resources :schedule,   only: [ :show, :new, :create, :edit, :update, :destroy, :reservation]
+    end
+    resources :schedules do
+      resources :reservations,   only: [:create, :new]
+    end
+  end
+  post "reservation/", to: "reservations#create"
 
   # 座席画面
   get '/sheets', to: "sheets#index"

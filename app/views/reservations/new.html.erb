@@ -1,0 +1,46 @@
+<h1>予約 : <%= @movie.name %></h1>
+
+<ul>
+    <li>
+        <b>映画名</b>
+        <%= @movie.name %>
+    </li>
+    <li>
+        <b>日付</b>
+        <%= @date %>
+    </li>
+    <li>
+        <b>時間</b>
+        <%= @schedule.view_time %>
+    </li>
+    <li>
+        <b>シート</b>
+        <%= @sheet.row %>-<%= @sheet.column %>
+    </li>
+</ul>
+
+<div id="form">
+        <%= form_with url: reservation_path, model:[@movie, @schedule, @reservation] , method: :post do |form| %>
+            <% if form.object.errors.any? %>
+            <p class="error"><%= form.object.errors.full_messages.first %></p>
+        <% end %>
+
+        <%= form.hidden_field :schedule_id, value: @schedule.id %>
+        <%= form.hidden_field :sheet_id, value: @sheet.id %>
+        <%= form.hidden_field :date, value: @date %>
+
+        <div>
+            <%= form.label :name %>
+            <%= form.text_field :name %>
+        </div>
+
+        <div>
+            <%= form.label :email %>
+            <%= form.email_field :email %>
+        </div>
+
+        <div>
+            <%= form.submit %>
+        </div>
+    <% end %>
+</div>
