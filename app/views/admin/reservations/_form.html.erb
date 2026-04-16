@@ -1,0 +1,36 @@
+
+<%= form_with model: reservation , method: request_method do |form| %>
+    <% if form.object.errors.any? %>
+        <p class="error"><%= form.object.errors.full_messages.first %></p>
+    <% end %>
+
+    <div>
+        <%= form.label :date %>
+        <%= form.date_field :date %>
+    </div>
+
+    <div class="form-group">
+        <%= form.label :schedule_id %>
+        <%= form.select :schedule_id, @schedules_data %>
+    </div>
+
+    <div class="form-group">
+        <%= form.label :sheet_id %>
+        <%= form.collection_select :sheet_id, @sheets, :id, :sheet_str %>
+    </div>
+
+
+    <div>
+        <%= form.label :name %>
+        <%= form.text_field :name %>
+    </div>
+
+    <div>
+        <%= form.label :email %>
+        <%= form.email_field :email %>
+    </div>
+
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>

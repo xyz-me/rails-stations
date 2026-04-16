@@ -1,0 +1,32 @@
+<h1>Sheets</h1>
+
+
+<div id="sheets">
+    <% if @sheets_array.length > 0 %>
+    <table border="1">
+        <tbody>
+            <tr>
+                <% for num in 1..@sheets_array[0].length do %>
+                    <% if (@sheets_array[0].length/2).ceil + 1 == num %>
+                    <td>スクリーン</td>
+                    <% else %>
+                    <td>.</td>
+                    <% end %>
+                <% end %>
+            </tr>
+            <tr>
+                <% for num in 1..@sheets_array[0].length do %>
+                    <td>:---:</td>
+                <% end %>
+            </tr>
+           <% @sheets_array.each_with_index do |sheets_row, i| %>
+                <tr>
+                    <% sheets_row.each_with_index do |sheet, i2| %>
+                        <td><%= sheet.row %>-<%= sheet.column %></td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>     
+    </table>
+    <% end %>
+</div>

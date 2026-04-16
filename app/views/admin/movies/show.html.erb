@@ -1,0 +1,30 @@
+<h1><%= @movie.name %></h1>
+
+
+<div id="schedule">
+    <h2>スケジュール</h2>
+    <%= link_to "New", new_admin_movie_schedule_path(@movie.id) %></td>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">開始時間</th>
+                <th scope="col">終了時間</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @schedules.each_with_index do |movie_schedule, i| %>
+                <tr>
+                    <td> <%= link_to movie_schedule.id, admin_schedules_path(movie_schedule.id) %></td>
+                    <td><%= movie_schedule.start_time_short %></td>
+                    <td><%= movie_schedule.end_time_short %></td>
+                </tr>
+            <% end %>
+        </tbody>     
+    </table>
+</div>
+
+
+
+<%= link_to "Back", admin_movies_path %>
+<%= link_to "Edit", edit_admin_movie_path(@movie) %>

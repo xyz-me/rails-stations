@@ -1,0 +1,44 @@
+<h1><%= @movie.name%></h1>
+
+<div id="sheets">
+    <table border="1">
+        <% if @sheets_array.length > 0 %>
+        <tbody>
+            <tr>
+                <% for num in 1..@sheets_array[0].length do %>
+                    <% if (@sheets_array[0].length/2).ceil + 1 == num %>
+                    <td>スクリーン</td>
+                    <% else %>
+                    <td>.</td>
+                    <% end %>
+                <% end %>
+            </tr>
+            <tr>
+                <% for num in 1..@sheets_array[0].length do %>
+                    <td>:---:</td>
+                <% end %>
+            </tr>
+           <% @sheets_array.each_with_index do |sheets_row, i| %>
+                <tr>
+                    <% sheets_row.each_with_index do |sheet, i2| %>
+                        <% text = sheet.row + "-" + sheet.column.to_s %>
+                        <td class="<%= class_names(gray: @sheets_has_reservation[i][i2]) %>">
+                            <% if @sheets_has_reservation[i][i2] == true %>
+                            <%= text + "(予約不可)" %>
+                            <% else %>
+                                <%= form_with model: nil , url: new_movie_schedule_reservation_path(@movie.id, @schedule_id), method: :get do |f| %>
+                                    <%= f.hidden_field :sheet_id, :value=>sheet.id %>
+                                    <%= f.hidden_field :date, :value=>@date %>
+                                    <%= f.hidden_field :schedule_id, :value=>@schedule_id %>
+                                    <%= f.submit text %>
+                                <% end %>
+                            <% end %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>   
+        <% end %>  
+    </table>
+    
+</div>

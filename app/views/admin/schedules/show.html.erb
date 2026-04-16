@@ -1,0 +1,38 @@
+<h1><%= @movie.name %></h1>
+
+<%= link_to "back", admin_schedules_path %>
+
+<%= form_with model: [:admin, @movie, @schedule] , method: :put do |form| %>
+    <% if form.object.errors.any? %>
+        <p class="error"><%= form.object.errors.full_messages.first %></p>
+    <% end %>
+
+    <%= form.fields_for :schedule do |f_schedule| %>
+      <div>
+          <%= f_schedule.label :movie_id %>
+          <%= f_schedule.text_field  :movie_id , value: @movie.id, readonly: true %>
+      </div>
+
+      <div>
+          <%= f_schedule.label :start_time %>
+          <%= f_schedule.datetime_field :start_time, value: @schedule.start_time %>
+      </div>
+
+      <div>
+        <%= f_schedule.label :end_time %>
+        <%= f_schedule.datetime_field :end_time, value: @schedule.end_time %>
+      </div>
+    <% end %>
+
+    <%= form.fields_for :screen do |f_screen| %>
+      <div>
+        <%= f_screen.label :screen_number %>
+        <%= f_screen.select :screen_number, @screen_numbers, selected:@select_screen_number %>
+      </div>
+    <% end %>
+
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>
+<%= button_to "削除", [:admin, @movie, @schedule], { method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } } %>

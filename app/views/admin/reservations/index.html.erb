@@ -1,0 +1,30 @@
+<h1>予約一覧</h1>
+
+<%= link_to "new", new_admin_reservation_path  %>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">映画作品</th>
+            <th scope="col">座席</th>
+            <th scope="col">日時 / 時間</th>
+            <th scope="col">名前</th>
+            <th scope="col">メールアドレス</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @reservations.each_with_index do |reservation, i| %>
+            <tr>
+                <th>
+                    <%= link_to reservation.id, admin_reservation_path(reservation.id)  %>
+                </th>
+                <td><%= reservation.schedule.movie.name %></td>
+                <td><%= reservation.sheet.column %>-<%= reservation.sheet.row %></td>
+                <td><%= reservation.date %> <%= reservation.schedule.start_time_short %> - <%= reservation.schedule.end_time_short %></td>
+                <td><%= reservation.name %></td>
+                <td><%= reservation.email %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
