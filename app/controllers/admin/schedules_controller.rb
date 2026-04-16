@@ -1,57 +1,89 @@
 class Admin::SchedulesController < ApplicationController
   def index
-    @movies = Movie.includes(:schedules).order(:id)
+    @movies = Movie.includes(schedules: :screen).order(:id)
   end
 
   def show
     @schedule = Schedule.find(params[:id])
     @movie = Movie.find(@schedule.movie_id)
+    @screen_numbers = [1,2,3]
+    $select_screen_number_result = Screen.where(schedule_id: @schedule.id ).limit(1)
+    if $select_screen_number_result.length == 0
+      @select_screen_number = 1
+    else
+      @select_screen_number = $select_screen_number_result.first.screen_number      
+    end
   end
 
  # 新規追加（スケジュール）
   def new
     @schedule = Schedule.new
     @movie = Movie.find(params[:movie_id])
+    @screen_numbers = [1,2,3]
   end
 
-  def create
-    @schedule = Schedule.new(schedule_params)
-    begin 
-      if @schedule.save
-        redirect_to admin_movies_path
-      else
-        render :new, status: :unprocessable_entity
-      end
-    rescue => e # 例外オブジェクトを代入した変数。
-      render :new, status: :unprocessable_entity
+  def create    
+    # @schedule = Schedule.new(schedule_params)
+    # @screen = Screen.new(scene_params)
+
+    # トランザクション処理
+    ActiveRecord::Base.transaction do
+      @schedule = Schedule.create!(schedule_params)
+      @screen = Screen.create!(scene_params.merge(schedule_id: @schedule.id))
     end
+    redirect_to admin_movies_path
+    
+    # ロールバック
+    rescue ActiveRecord::RecordInvalid => e
+      render :new, status: :unprocessable_entity
   end
 
-  def update
-    logger.info "debug update"
+  def update    
+    # トランザクション処理
+    ActiveRecord::Base.transaction do
+      @schedule = Schedule.find(params[:id])
+      @screen = Screen.where(schedule_id: @schedule.id ).limit(1)
 
-    @schedule = Schedule.find(params[:id])
-    begin 
-      if @schedule.update(schedule_params)
-        redirect_to admin_schedules_path
+      @schedule.update!(schedule_params)
+      if @screen.length > 0
+        @screen.update!(scene_params.merge(schedule_id: @schedule.id))
       else
-        render :edit, status: :unprocessable_entity
+        # データの不整合が発生していた場合は新規作成
+        @screen = Screen.create!(scene_params.merge(schedule_id: @schedule.id))
       end
-    rescue => e # 例外オブジェクトを代入した変数。
-      logger.info e.message
-      render :new, status: :unprocessable_entity
     end
+    redirect_to admin_schedules_path
+    
+    # ロールバック
+    rescue ActiveRecord::RecordInvalid => e
+      render :edit, status: :unprocessable_entity
   end
 
   def destroy
-    @schedule = Schedule.find(params[:id])
-    @schedule.destroy
+    # トランザクション処理
+    ActiveRecord::Base.transaction do
+      @schedule = Schedule.find(params[:id])
+      @screen = Screen.where(schedule_id: @schedule.id ).limit(1)
+      if @screen.length > 0
+        @screen.first.destroy
+      end
+      @schedule.destroy
+    end
     redirect_to admin_schedules_path
+    
+    # ロールバック
+    rescue ActiveRecord::RecordInvalid => e
+      render :edit, status: :unprocessable_entity
+    
   end
 
   private
     # 検証
     def schedule_params
-      params.require(:schedule).permit(:movie_id ,:start_time, :end_time)
+      params.require(:schedule).require(:schedule).permit(:movie_id ,:start_time, :end_time)
+    end
+
+    def scene_params
+      params.require(:schedule).require(:screen).permit(:screen_number)
     end
 end

@@ -1,6 +1,7 @@
 class Schedule < ApplicationRecord
   belongs_to :movie
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
+  has_one :screen
 
   def view_time
     self.start_time.strftime('%H:%M') + '-' + self.end_time.strftime('%H:%M')
