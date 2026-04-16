@@ -1,5 +1,6 @@
 <h1><%= @movie.name %></h1>
 
+<%= link_to "back", admin_schedules_path %>
 
 <%= form_with model: [:admin, @movie, @schedule] , method: :put do |form| %>
     <% if form.object.errors.any? %>

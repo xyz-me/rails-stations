@@ -16,9 +16,9 @@
                 <tbody>
                      <% @movies[i].schedules.each_with_index do |schedule, i2| %>
                         <tr>
-                            <td> <%= link_to schedule.id, admin_schedules_path(schedule.id) %></td>
-                            <td><%= schedule.start_time %></td>
-                            <td><%= schedule.end_time %></td>
+                            <td> <%= link_to schedule.id, admin_schedule_path(schedule.id) %></td>
+                            <td><%= schedule.start_time_short %></td>
+                            <td><%= schedule.end_time_short %></td>
                         </tr>
                     <% end %>
                     </tbody>    

@@ -3,7 +3,7 @@ class Admin::SchedulesController < ApplicationController
     @movies = Movie.includes(:schedules).order(:id)
   end
 
-  def edit
+  def show
     @schedule = Schedule.find(params[:id])
     @movie = Movie.find(@schedule.movie_id)
   end

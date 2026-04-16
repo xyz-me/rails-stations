@@ -3,6 +3,7 @@
 
 <div id="schedule">
     <h2>スケジュール</h2>
+    <%= link_to "New", new_admin_movie_schedule_path(@movie.id) %></td>
     <table>
         <thead>
             <tr>
@@ -15,8 +16,8 @@
             <% @schedules.each_with_index do |movie_schedule, i| %>
                 <tr>
                     <td> <%= link_to movie_schedule.id, admin_schedules_path(movie_schedule.id) %></td>
-                    <td><%= movie_schedule.start_time %></td>
-                    <td><%= movie_schedule.end_time %></td>
+                    <td><%= movie_schedule.start_time_short %></td>
+                    <td><%= movie_schedule.end_time_short %></td>
                 </tr>
             <% end %>
         </tbody>     

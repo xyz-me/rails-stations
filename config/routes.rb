@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :schedules, only: [ :show, :new, :create, :edit, :update, :destroy]
     end
     resources :reservations, only: [ :index, :show, :new, :create, :edit, :update, :destroy]
+    resources :schedules
   end
 
   # 管理者画面

@@ -1,6 +1,4 @@
-<h1>Admin::Movies#index</h1>
-<p>Find me in app/views/admin/movies/index.html.erb</p>
-
+<h1>映画一覧</h1>
 
 <%= link_to "New Movie", admin_movies_new_path %>
 
@@ -51,10 +49,12 @@
         <tbody>
             <% @schedules.each_with_index do |schedule, i| %>
                 <tr>
-                    <th><%= schedule.id %></th>
+                    <th>
+                        <%= link_to schedule.id, admin_schedule_path(schedule.id) %>
+                    </th>
                     <td><%= schedule.movie_id %></td>
-                    <td><%= schedule.start_time %></td>
-                    <td><%= schedule.end_time %></td>
+                    <td><%= schedule.start_time_short %></td>
+                    <td><%= schedule.end_time_short %></td>
                 </tr>
             <% end %>
         </tbody>     
