@@ -27,13 +27,12 @@ Rails.application.routes.draw do
     resources :movies do
       resources :schedules, only: [ :show, :new, :create, :edit, :update, :destroy]
     end
+    resources :reservations, only: [ :index, :show, :new, :create, :edit, :update, :destroy]
   end
 
   # 管理者画面
   ## 一覧画面
   # get "/admin/movies/:id", to: "admin/movies#show"
-
-  
   get "/admin/schedules", to: "admin/schedules#index"
   get "/admin/schedules/:id", to: "admin/schedules#edit"
   put "/admin/schedules/:id", to: "admin/schedules#update"
@@ -42,6 +41,8 @@ Rails.application.routes.draw do
   ## 新規追加画面
   get "/admin/movies/new", to: "admin/movies#new"
   post "/admin/movies/", to: "admin/movies#create"
+
+  ## 
 
   ## 編集画面
   # get "/admin/movies/:id", to: "admin/movies#show"

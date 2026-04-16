@@ -13,5 +13,20 @@ class Schedule < ApplicationRecord
     start_time.strftime("%Y-%m-%d %H:%M:%S")
   end
 
+  def start_time_short
+    return if start_time.blank?
+    start_time.strftime("%H:%M:%S")
+  end
+
+  def end_time_fix
+    return if end_time.blank?
+    end_time.strftime("%Y-%m-%d %H:%M:%S")
+  end
+
+  def end_time_short
+    return if end_time.blank?
+    end_time.strftime("%H:%M:%S")
+  end
+
   
 end

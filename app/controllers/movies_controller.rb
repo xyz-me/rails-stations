@@ -93,8 +93,6 @@ class MoviesController < ApplicationController
       else
         $tmp_sheets_has_reservation.push(false)
       end
-
-      
     end
 
     if $tmp_array.length != 0
