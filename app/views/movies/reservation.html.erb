@@ -21,13 +21,17 @@
            <% @sheets_array.each_with_index do |sheets_row, i| %>
                 <tr>
                     <% sheets_row.each_with_index do |sheet, i2| %>
-                        <td>
-                            <%= form_with model: nil , url: new_movie_schedule_reservation_path(@movie.id, @schedule_id), method: :get do |f| %>
-                                <%= f.hidden_field :sheet_id, :value=>sheet.id %>
-                                <%= f.hidden_field :date, :value=>@date %>
-                                <%= f.hidden_field :schedule_id, :value=>@schedule_id %>
-                                <% text = sheet.row + "-" + sheet.column.to_s %>
-                                <%= f.submit text %>
+                        <% text = sheet.row + "-" + sheet.column.to_s %>
+                        <td class="<%= class_names(gray: @sheets_has_reservation[i][i2]) %>">
+                            <% if @sheets_has_reservation[i][i2] == true %>
+                            <%= text + "(予約不可)" %>
+                            <% else %>
+                                <%= form_with model: nil , url: new_movie_schedule_reservation_path(@movie.id, @schedule_id), method: :get do |f| %>
+                                    <%= f.hidden_field :sheet_id, :value=>sheet.id %>
+                                    <%= f.hidden_field :date, :value=>@date %>
+                                    <%= f.hidden_field :schedule_id, :value=>@schedule_id %>
+                                    <%= f.submit text %>
+                                <% end %>
                             <% end %>
                         </td>
                     <% end %>
