@@ -14,19 +14,19 @@ class Admin::MoviesController < ApplicationController
   def new
     @movie = Movie.new
 
-    # render status: :found 
+    # render status: :found
   end
 
   # 新規追加
   def create
     @movie = Movie.new(movie_params)
-    begin 
+    begin
       if @movie.save
         redirect_to admin_movies_path
       else
         render :new, status: :unprocessable_entity
       end
-    rescue => e # 例外オブジェクトを代入した変数。
+    rescue StandardError # 例外オブジェクトを代入した変数。
       render :new, status: :unprocessable_entity
     end
   end
@@ -37,13 +37,13 @@ class Admin::MoviesController < ApplicationController
 
   def update
     @movie = Movie.find(params[:id])
-    begin 
+    begin
       if @movie.update(movie_params)
         redirect_to admin_movies_path
       else
         render :edit, status: :unprocessable_entity
       end
-    rescue => e # 例外オブジェクトを代入した変数。
+    rescue StandardError # 例外オブジェクトを代入した変数。
       render :new, status: :unprocessable_entity
     end
   end
@@ -54,11 +54,11 @@ class Admin::MoviesController < ApplicationController
     @movie.destroy
     redirect_to admin_movies_path
   end
-    
 
   private
-    # 検証
-    def movie_params
-      params.require(:movie).permit(:name,:year, :description, :image_url, :is_showing)
-    end
+
+  # 検証
+  def movie_params
+    params.require(:movie).permit(:name, :year, :description, :image_url, :is_showing)
+  end
 end

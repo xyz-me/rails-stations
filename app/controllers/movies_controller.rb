@@ -6,27 +6,30 @@ class MoviesController < ApplicationController
 
     # is_publicが"true"または"false"であるか？（未指定またはその他）
     $public = -1
-    if @is_public == "1"
-      $public = 1 # 公開あり
-    elsif  @is_public == "0"
-      $public = 0 #　公開あり
-    else
-      $public = -1 # 未指定
-    end
+    $public = if @is_public == '1'
+                1 # 公開あり
+              elsif @is_public == '0'
+                0 # 　公開あり
+              else
+                -1 # 未指定
+              end
 
     # パラメータに文字列があるかを判定
-    if @keyword != nil && !@keyword.empty?
+    if !@keyword.nil? && !@keyword.empty?
       if $public != -1
-        @movies = Movie.where("name LIKE ?", "%" + @keyword +  "%").or(Movie.where("description LIKE ?", "%" + @keyword +  "%")). where(is_showing: $public)
+        @movies = Movie.where('name LIKE ?',
+                              '%' + @keyword + '%').or(Movie.where('description LIKE ?',
+                                                                   '%' + @keyword + '%')).where(is_showing: $public)
       else
-         @movies = Movie.where("name LIKE ?", "%" + @keyword +  "%").or(Movie.where("description LIKE ?", "%" + @keyword +  "%"))
+        @movies = Movie.where('name LIKE ?',
+                              '%' + @keyword + '%').or(Movie.where('description LIKE ?', '%' + @keyword + '%'))
       end
     else
-      if $public != -1
-        @movies = Movie.where(is_showing: $public)
-      else
-        @movies = Movie.all
-      end
+      @movies = if $public != -1
+                  Movie.where(is_showing: $public)
+                else
+                  Movie.all
+                end
     end
   end
 
@@ -40,7 +43,7 @@ class MoviesController < ApplicationController
 
     for num in 0..6 do
       target = @today + num.day
-      @one_week_list.push([target.strftime("%Y-%m-%d"), target.strftime("%Y-%m-%d %H:%M:%S")])
+      @one_week_list.push([target.strftime('%Y-%m-%d'), target.strftime('%Y-%m-%d %H:%M:%S')])
     end
 
     @reservation = Reservation.new
@@ -48,38 +51,38 @@ class MoviesController < ApplicationController
 
   def reservation
     # パラメータがない場合は遷移（302エラー）
-    if !params.has_key?(:date)
-      redirect_to movies_path, alert: "スケジュールが見つかりませんでした。"
-      return 
+    unless params.has_key?(:date)
+      redirect_to movies_path, alert: 'スケジュールが見つかりませんでした。'
+      return
     end
 
     # dataパラメータのフォーマットチェック
     @date_input = params[:date] # 日付を受け取る(YYYY-MM-DD HH:MM)
-    unless @date_input&.match?(/\A\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\z/) 
-      redirect_to movies_path, alert: "スケジュールが見つかりませんでした。"
-      return 
+    unless @date_input&.match?(/\A\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\z/)
+      redirect_to movies_path, alert: 'スケジュールが見つかりませんでした。'
+      return
     end
 
-    @date = Time.parse(@date_input).strftime("%Y-%m-%d")
+    @date = Time.parse(@date_input).strftime('%Y-%m-%d')
     @movie =  Movie.find(params[:id])
     @schedule = Schedule.find_by(id: params[:schedule_id])
     if @schedule.nil?
-      redirect_to movies_path, alert: "スケジュールが見つかりませんでした。"
+      redirect_to movies_path, alert: 'スケジュールが見つかりませんでした。'
     else
       @schedule_id = @schedule.id
-    end    
+    end
 
     @sheets = Sheet.all
-    @reservations = Reservation.where(date: @date, schedule_id:@schedule_id)
+    @reservations = Reservation.where(date: @date, schedule_id: @schedule_id)
 
     # 配列に変換
     @sheets_array = [] # 最終結果
     $tmp_array = [] # 一時保存
     @sheets_has_reservation = []
     $tmp_sheets_has_reservation = []
-    
-    @sheets.each_with_index do |sheet, i|
-      if i > 0 && @sheets[i - 1]["row"] != @sheets[i]["row"]
+
+    @sheets.each_with_index do |_sheet, i|
+      if i > 0 && @sheets[i - 1]['row'] != @sheets[i]['row']
         # rowが変わるタイミングで$tmp_arrayをsheets_arrayに挿入
         @sheets_array.push($tmp_array)
         $tmp_array = []
@@ -95,14 +98,14 @@ class MoviesController < ApplicationController
       end
     end
 
-    if $tmp_array.length != 0
-      @sheets_array.push($tmp_array)
-      @sheets_has_reservation.push($tmp_sheets_has_reservation)
-    end
+    return unless $tmp_array.length != 0
+
+    @sheets_array.push($tmp_array)
+    @sheets_has_reservation.push($tmp_sheets_has_reservation)
   end
 
   def new
     @movie =  Movie.find(params[:movie_id])
-    @schedule =  Movie.find(params[:schedule_id])
+    @schedule = Movie.find(params[:schedule_id])
   end
 end
