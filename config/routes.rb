@@ -31,9 +31,14 @@ Rails.application.routes.draw do
   resources :sheets
 
   namespace :admin do
+    get 'rooms/index'
+    get 'sites/index'
     resources :movies do
       resources :schedules, only: %i[show new create edit update destroy]
     end
+    resources :sites do
+      resources :rooms, only: %i[index show new create edit update destroy]
+    end 
     resources :reservations, only: %i[index show new create edit update destroy]
     resources :schedules
   end

@@ -59,7 +59,7 @@ module Admin
         else
           render :edit, status: :unprocessable_entity
         end
-      rescue StandardError # 例外オブジェクトを代入した変数。
+      rescue StandardError
         render :new, status: :unprocessable_entity
       end
     end

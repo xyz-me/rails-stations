@@ -1,0 +1,15 @@
+<h1>劇場を追加</h1>
+<%= form_with model: [:admin, @site] , method: :post, local: true do |f| %>
+    <% if f.object.errors.any? %>
+      <p class="error"><%= f.object.errors.full_messages.first %></p>
+    <% end %>
+
+    <div>
+        <%= f.label :name %>
+        <%= f.text_field  :name%>
+    </div>
+
+    <div>
+        <%= f.submit %>
+    </div>
+<% end %>

@@ -1,0 +1,17 @@
+<h1>スクリーンを編集(<%= @site.name %>)</h1>
+<%= form_with model: [:admin, @site, @room] , method: :put, local: true do |f| %>
+    <% if f.object.errors.any? %>
+      <p class="error"><%= f.object.errors.full_messages.first %></p>
+    <% end %>
+
+    <div>
+        <%= f.label :screen_number %>
+        <%= f.text_field  :screen_number%>
+    </div>
+
+    <div>
+        <%= f.submit %>
+    </div>
+<% end %>
+
+<%= button_to "削除", [:admin, @site, @room], { method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } } %>

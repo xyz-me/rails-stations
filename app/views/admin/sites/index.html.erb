@@ -1,0 +1,28 @@
+<h1>劇場一覧</h1>
+
+<%= link_to "New Site", new_admin_site_path %>
+
+<div id="sites">
+    <% if @sites.length > 0 %>
+        <table>
+          <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">劇場名</th>
+              <th scope="col">スクリーン</th>
+          </tr>
+      </thead>
+      <tbody>
+            <% @sites.each_with_index do |site, i| %>
+              <tr>
+                  <td><%= link_to site.id, admin_site_path(site.id) %></td>
+                  <td><%= site.name %></td>
+                  <td><%= link_to "スクリーンの編集(#{site.rooms.length})", admin_site_rooms_path(site.id) %></td>
+              </tr>
+          <% end %>
+          </tbody>    
+      </table> 
+    <% else %> 
+        劇場がありません   
+    <% end %>
+</div>

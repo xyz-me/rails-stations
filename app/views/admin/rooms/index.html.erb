@@ -1,0 +1,28 @@
+<h1>スクリーン一覧(<%= @site.name %>)</h1>
+
+<%= link_to "New Screen", new_admin_site_room_path(@site.id) %>
+
+<div id="rooms">
+    <% if @rooms.length > 0 %>
+        <table>
+          <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">スクリーンナンバー</th>
+          </tr>
+      </thead>
+      <tbody>
+            <% @rooms.each_with_index do |room, i| %>
+              <tr>
+                  <td><%= link_to room.id, admin_site_room_path(@site.id,room.id) %></td>
+                  <td><%= room.screen_number %></td>
+              </tr>
+          <% end %>
+          </tbody>    
+      </table> 
+    <% else %> 
+        スクリーンがありません   
+    <% end %>
+</div>
+
+<%= link_to "Siteに戻る", admin_sites_path %>
