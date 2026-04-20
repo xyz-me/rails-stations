@@ -9,12 +9,13 @@ module Admin
     def show
       @schedule = Schedule.find(params[:id])
       @movie = Movie.find(@schedule.movie_id)
-      @screen_numbers = [1, 2, 3]
+      @rooms = Room.all
       select_screen_number_result = Screen.where(schedule_id: @schedule.id).limit(1)
-      @select_screen_number = if select_screen_number_result.empty?
-                                1
+
+      @select_screen_number = if select_screen_number_result.length.positive?
+                                select_screen_number_result.first.room.id
                               else
-                                select_screen_number_result.first.screen_number
+                                @rooms.first.id
                               end
     end
 
@@ -22,13 +23,15 @@ module Admin
     def new
       @schedule = Schedule.new
       @movie = Movie.find(params[:movie_id])
-      @screen_numbers = [1, 2, 3]
+      @rooms = Room.all
     end
 
     def create
       # @schedule = Schedule.new(schedule_params)
       # @screen = Screen.new(scene_params)
-
+      @movie = Movie.find(params[:movie_id])
+      @rooms = Room.all
+      
       # トランザクション処理
       ActiveRecord::Base.transaction do
         @schedule = Schedule.create!(schedule_params)
@@ -85,7 +88,7 @@ module Admin
     end
 
     def scene_params
-      params.require(:schedule).require(:screen).permit(:screen_number)
+      params.require(:schedule).require(:screen).permit(:room_id)
     end
   end
 end

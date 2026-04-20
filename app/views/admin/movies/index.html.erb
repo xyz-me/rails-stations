@@ -41,9 +41,10 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">movie_id</th>
+                <th scope="col">映画名</th>
                 <th scope="col">開始時刻</th>
                 <th scope="col">終了時刻</th>
+                <th scope="col">スクリーン（劇場）</th>
             </tr>
         </thead>
         <tbody>
@@ -52,9 +53,10 @@
                     <th>
                         <%= link_to schedule.id, admin_schedule_path(schedule.id) %>
                     </th>
-                    <td><%= schedule.movie_id %></td>
+                    <td><%= schedule.movie.name %></td>
                     <td><%= schedule.start_time_short %></td>
                     <td><%= schedule.end_time_short %></td>
+                    <td><%= schedule&.screen&.room&.screen_number ||"UnKnown" %>(<%= schedule&.screen&.room&.site&.name ||"UnKnown" %>)</td>
                 </tr>
             <% end %>
         </tbody>     

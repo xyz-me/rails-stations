@@ -10,6 +10,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">開始時間</th>
                 <th scope="col">終了時間</th>
+                <th scope="col">サイト/劇場</th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@
                     <td> <%= link_to movie_schedule.id, admin_schedules_path(movie_schedule.id) %></td>
                     <td><%= movie_schedule.start_time_short %></td>
                     <td><%= movie_schedule.end_time_short %></td>
+                    <td><%= movie_schedule&.screen&.room&.screen_number || "UnKnown" %> (<%= movie_schedule&.screen&.room&.site&.name || "UnKnown" %>)</td>
                 </tr>
             <% end %>
         </tbody>     

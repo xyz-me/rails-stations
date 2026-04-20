@@ -1,7 +1,5 @@
 <h1>上演スケジュール</h1>
 
-<%=debug @movies.first.schedules&.first&.screen&.first&.screen_number || "" %>
-
 <div id="sheets">
     <% if @movies.length > 0 %>
         <% @movies.each_with_index do |movie, i| %>
@@ -13,16 +11,16 @@
                         <th scope="col">ID</th>
                         <th scope="col">開始時間</th>
                         <th scope="col">終了時間</th>
-                        <th scope="col">スクリーン</th>
+                        <th scope="col">スクリーン/劇場</th>
                     </tr>
                 </thead>
                 <tbody>
                      <% @movies[i].schedules.each_with_index do |schedule, i2| %>
                         <tr>
-                            <td> <%= link_to schedule.id, admin_schedule_path(schedule.id) %></td>
+                            <td><%= link_to schedule.id, admin_schedule_path(schedule.id) %></td>
                             <td><%= schedule.start_time_short %></td>
                             <td><%= schedule.end_time_short %></td>
-                            <td><%= @movies[i].schedules&.[](i2)&.screen&.screen_number || "" %></td>
+                            <td><%= @movies[i].schedules&.[](i2)&.screen&.room&.screen_number || "UnKnown" %> (<%= @movies[i].schedules&.[](i2)&.screen&.room&.site&.name || "UnKnown" %>)</td>
                         </tr>
                     <% end %>
                     </tbody>    

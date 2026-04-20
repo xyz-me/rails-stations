@@ -46,13 +46,15 @@
             <tr>
                 <th scope="col">開始時間</th>
                 <th scope="col">終了時間</th>
+                <th scope="col">映画館</th>
             </tr>
         </thead>
         <tbody>
             <% @schedules.each_with_index do |movie_schedule, i| %>
                 <tr>
-                    <td><%= movie_schedule.start_time %></td>
-                    <td><%= movie_schedule.end_time %></td>
+                    <td><%= movie_schedule.start_time_short %></td>
+                    <td><%= movie_schedule.end_time_short %></td>
+                    <td><%= movie_schedule&.screen&.room&.site&.name || "UnKnown" %></td>
                 </tr>
             <% end %>
         </tbody>     

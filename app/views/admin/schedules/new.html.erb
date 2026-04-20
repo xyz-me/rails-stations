@@ -23,8 +23,8 @@
 
     <%= form.fields_for :screen do |f_screen| %>
       <div>
-        <%= f_screen.label :screen_number %>
-        <%= f_screen.select :screen_number, @screen_numbers %>
+        <%= f_screen.label :room_id %>
+        <%= f_screen.collection_select :room_id, @rooms, :id , :screen_with_site %>
       </div>
     <% end %>
   <div>
