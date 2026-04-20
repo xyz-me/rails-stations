@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admin
+module Admin
   class SchedulesController < ApplicationController
     def index
       @movies = Movie.includes(schedules: :screen).order(:id)

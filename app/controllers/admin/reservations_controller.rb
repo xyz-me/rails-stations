@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admin
+module Admin
   class ReservationsController < ApplicationController
     def index
       @reservations = Reservation.joins(schedule: :movie).where(movies: { is_showing: true }).includes(:schedule)
