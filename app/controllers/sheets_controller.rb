@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 class SheetsController < ApplicationController
   def index
     @sheets = Sheet.all
 
     # 配列に変換
     @sheets_array = [] # 最終結果
-    $tmp_array = [] # 一時保存
+    tmp_array = [] # 一時保存
 
     @sheets.each_with_index do |_sheet, i|
-      if i > 0 && @sheets[i - 1]['row'] != @sheets[i]['row']
-        # rowが変わるタイミングで$tmp_arrayをsheets_arrayに挿入
-        @sheets_array.push($tmp_array)
-        $tmp_array = []
+      if i.positive? && @sheets[i - 1]['row'] != @sheets[i]['row']
+        # rowが変わるタイミングでtmp_arrayをsheets_arrayに挿入
+        @sheets_array.push(tmp_array)
+        tmp_array = []
       end
-      $tmp_array.push(@sheets[i])
+      tmp_array.push(@sheets[i])
     end
 
-    return unless $tmp_array.length != 0
+    return if tmp_array.empty?
 
-    @sheets_array.push($tmp_array)
+    @sheets_array.push(tmp_array)
   end
 end

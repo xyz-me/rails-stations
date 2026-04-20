@@ -1,1 +1,22 @@
 inherit_from: .rubocop_todo.yml
+
+# inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Include:
+    - foo.unusual_extension
+    - '**/*.rb'
+    - '**/*.gemfile'
+    - '**/*.gemspec'
+    - '**/*.rake'
+    - '**/*.ru'
+    - '**/Gemfile'
+    - '**/Rakefile'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/{rails,rake}'
+    - !ruby/regexp /old_and_unused\.rb$/
+    - 'app/controllers/users/*'
+    - 'spec/*'

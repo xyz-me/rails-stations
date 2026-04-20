@@ -1,2 +1,6 @@
-module Admin::SchedulesHelper
+# frozen_string_literal: true
+
+module Admin
+  class SchedulesHelper
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 # HACK: Screenモデルを直接指定するとRspec自体の実行が失敗するため、指定していない

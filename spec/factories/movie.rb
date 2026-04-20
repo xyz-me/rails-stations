@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :movie do
     sequence(:name) { |n| "TEST_MOVIE#{n}" }

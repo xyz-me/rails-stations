@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class ReservationsController < ApplicationController
   # 新規予約追加画面(GET)
   def new
     # dataがないとエラー
-    unless params.has_key?(:date)
+    unless params.key?(:date)
       redirect_to movies_path, alert: 'スケジュールが見つかりませんでした。'
       return
     end
 
     # sheet_idがないとエラー
-    unless params.has_key?(:sheet_id)
+    unless params.key?(:sheet_id)
       redirect_to movies_path, alert: 'スケジュールが見つかりませんでした。'
       return
     end

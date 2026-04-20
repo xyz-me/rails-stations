@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Schedule < ApplicationRecord
   belongs_to :movie
   has_many :reservations, dependent: :destroy
   has_one :screen
 
   def view_time
-    start_time.strftime('%H:%M') + '-' + end_time.strftime('%H:%M')
+    "#{start_time.strftime('%H:%M')}-#{end_time.strftime('%H:%M')}"
   end
 
   # 形式 (YYYY:MM:DD HH:MM) の変換
