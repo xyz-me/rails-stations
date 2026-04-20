@@ -31,12 +31,12 @@
 
         <div>
             <%= form.label :name %>
-            <%= form.text_field :name %>
+            <%= form.text_field :name, value: @name, disabled:true %>
         </div>
 
         <div>
             <%= form.label :email %>
-            <%= form.email_field :email %>
+            <%= form.email_field :email, value: @email, disabled:true%>
         </div>
 
         <div>

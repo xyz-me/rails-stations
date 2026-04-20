@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ReservationsController < ApplicationController
+  before_action :authenticate_user!
+
   # 新規予約追加画面(GET)
   def new
     # dataがないとエラー
@@ -25,16 +27,20 @@ class ReservationsController < ApplicationController
 
     # 新規予約情報
     @reservation = Reservation.new
+
+    # emailアドレス
+    @email = current_user.email
+
+    # 氏名
+    @name = current_user.name
   end
 
   # 新規追加(POST)
   def create
-    @reservation = Reservation.new(reservation_params)
+    @reservation = Reservation.new(reservation_params.merge(email: current_user.email, name: current_user.name))
     @schedule =  Schedule.find(params[:reservation][:schedule_id])
     @movie = Movie.find(@schedule.movie_id)
     @sheet = Sheet.find(params[:reservation][:sheet_id])
-    @email = params[:reservation][:email]
-    @date =  params[:reservation][:date]
 
     if @reservation.save
       redirect_to movie_path(@movie.id), status: 302
@@ -55,6 +61,6 @@ class ReservationsController < ApplicationController
 
   # 検証
   def reservation_params
-    params.require(:reservation).permit(:schedule_id, :sheet_id, :date, :name, :email)
+    params.require(:reservation).permit(:schedule_id, :sheet_id, :date)
   end
 end
