@@ -9,6 +9,10 @@ class Schedule < ApplicationRecord
     "#{start_time.strftime('%H:%M')}-#{end_time.strftime('%H:%M')} (#{screen&.room&.site&.name || "UnKnown"})"
   end
 
+  def view_only_time
+    "#{start_time.strftime('%H:%M')}-#{end_time.strftime('%H:%M')}"
+  end
+
   # 形式 (YYYY:MM:DD HH:MM) の変換
   def start_time_fix
     return if start_time.blank?

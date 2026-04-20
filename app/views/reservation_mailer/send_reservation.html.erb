@@ -1,0 +1,29 @@
+<h1>【テスト】予約が完了しました</h1>
+
+<h2><%= @reservation.name %> 様</h2>
+<p>ご利用ありがとうございます。<br/>以下の予約が取得できました。</p>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">映画名</th>
+            <th scope="col">日付</th>
+            <th scope="col">開始時間</th>
+            <th scope="col">終了時間</th>
+            <th scope="col">スクリーン</th>
+            <th scope="col">映画館</th>
+            <th scope="col">名前</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><%= @reservation.schedule.movie.name %></td>
+            <td><%= @reservation.date %></td>
+            <td><%= @reservation.schedule.start_time_short %></td>
+            <td><%= @reservation.schedule.end_time_short %></td>
+            <td><%= @reservation.schedule&.screen&.room&.screen_number || "UnKnown" %></td>
+            <td><%= @reservation.schedule&.screen&.room&.site&.name || "UnKnown" %></td>
+            <td><%= @reservation.name %></td>
+        </tr>
+    </tbody>    
+</table>  

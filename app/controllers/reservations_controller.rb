@@ -43,6 +43,10 @@ class ReservationsController < ApplicationController
     @sheet = Sheet.find(params[:reservation][:sheet_id])
 
     if @reservation.save
+      # メール送信
+      ReservationMailer.send_reservation(@reservation).deliver
+
+      # リダイレクト処理
       redirect_to movie_path(@movie.id), status: 302
     else
       # 失敗時
