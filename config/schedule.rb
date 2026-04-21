@@ -30,3 +30,7 @@ ENV.each { |k, v| env(k, v) }
 every :minute do
   rake "task_day_before:send_email"
 end
+
+every 1.day, at: '0:00 am' do
+  rake "task_ranking:yesterday_day_reservation"
+end

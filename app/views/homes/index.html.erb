@@ -1,6 +1,5 @@
 <h1>ようこそ! <%= @name %> さん</h1>
 
-
 <div id="reservations" class="">
     <div class="my-4">
         <h2 class="my-4 text-xl">あなたの予約</h2>
@@ -33,5 +32,33 @@
         </table>  
     <% else %> 
         予約はありません   
+    <% end %>
+</div>
+
+<div id="ranking" class="">
+    <div class="my-4">
+        <h2 class="my-4 text-xl">ランキング</h2>
+    </div>
+    <% if @reservations_ranking.length > 0 %>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">映画名</th>
+                    <th scope="col">カウント</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @reservations_ranking.each_with_index do |ranking, i| %>
+                    <tr>
+                        <td>
+                            <%= link_to ranking.movie.name, movies_path(ranking.movie.id)%>
+                        </td>
+                        <td><%= ranking.total_count %></td>
+                    </tr>
+                <% end %>
+            </tbody>    
+        </table>  
+    <% else %> 
+        ランキングがありません   
     <% end %>
 </div>
