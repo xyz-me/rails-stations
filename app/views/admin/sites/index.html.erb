@@ -1,27 +1,30 @@
-<h1>劇場一覧</h1>
-
-<%= link_to "New Site", new_admin_site_path %>
+<div class="flex justify-between items-center">
+    <h1 class="my-4 text-3xl" >劇場一覧</h1>
+    <%= link_to "新しい劇場を追加する", new_admin_site_path, class:"p-2 rounded-xl bg-[#d30000] text-[#ffffff]" %>
+</div>
 
 <div id="sites">
     <% if @sites.length > 0 %>
-        <table>
-          <thead>
-          <tr>
-              <th scope="col">ID</th>
-              <th scope="col">劇場名</th>
-              <th scope="col">スクリーン</th>
-          </tr>
-      </thead>
-      <tbody>
-            <% @sites.each_with_index do |site, i| %>
-              <tr>
-                  <td><%= link_to site.id, admin_site_path(site.id) %></td>
-                  <td><%= site.name %></td>
-                  <td><%= link_to "スクリーンの編集(#{site.rooms.length})", admin_site_rooms_path(site.id) %></td>
-              </tr>
-          <% end %>
-          </tbody>    
-      </table> 
+    <div class="whitespace-nowrap overflow-auto h-[500px] w-full my-2 top-0">
+        <table class="table-auto">
+            <thead class="sticky top-0 z-10">
+            <tr class="bg-red-200">
+                <th scope="col" class="sticky left-0  bg-white border">ID</th>
+                <th scope="col" class="px-4 py-2 border">劇場名</th>
+                <th scope="col" class="px-4 py-2 border">スクリーン</th>
+            </tr>
+        </thead>
+        <tbody>
+                <% @sites.each_with_index do |site, i| %>
+                <tr>
+                    <td class="px-4 py-2 sticky left-0 z-[2] bg-red-100 border"><%= link_to site.id, admin_site_path(site.id), class:"text-[#d30000]"  %></td>
+                    <td class="px-4 py-2 border"><%= site.name %></td>
+                    <td class="px-4 py-2 border"><%= link_to "スクリーンの編集(#{site.rooms.length})", admin_site_rooms_path(site.id), class:"text-[#d30000]" %></td>
+                </tr>
+            <% end %>
+            </tbody>    
+        </table> 
+      </div>
     <% else %> 
         劇場がありません   
     <% end %>

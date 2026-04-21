@@ -1,4 +1,4 @@
-<h1>予約編集（<%= @reservation.id %>)</h1>
+<h1 class="my-4 text-3xl" >予約編集（<%= @reservation.id %>)</h1>
 
 <%= render "form", reservation: [:admin, @reservation], request_method: :put %>
 <%= button_to "削除", [:admin, @reservation], { method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } } %>

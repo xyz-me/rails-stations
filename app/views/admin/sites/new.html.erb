@@ -1,15 +1,18 @@
-<h1>劇場を追加</h1>
+<div class="flex justify-between items-center">
+    <h1 class="my-4 text-3xl" >劇場を追加</h1>    
+</div>
+
 <%= form_with model: [:admin, @site] , method: :post, local: true do |f| %>
     <% if f.object.errors.any? %>
       <p class="error"><%= f.object.errors.full_messages.first %></p>
     <% end %>
 
-    <div>
+     <div class="field w-full my-2">
         <%= f.label :name %>
-        <%= f.text_field  :name%>
+        <%= f.text_field  :name, class:"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" %>
     </div>
 
-    <div>
-        <%= f.submit %>
+    <div class="actions w-full my-2">
+        <%= f.submit "劇場を作成", class:"bg-[#d30000] text-white p-2 rounded w-full text-lg cursor-pointer" %>
     </div>
 <% end %>

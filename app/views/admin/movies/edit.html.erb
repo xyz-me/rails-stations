@@ -1,4 +1,4 @@
-<h1>Edit Movie!</h1>
+<h1 class="my-4 text-3xl" >映画の編集</h1>
 
 <%= render "form", movie: [:admin, @movie], request_method: :put %>
 <%= link_to "Cancel", admin_movie_path(@movie.id)  %>
