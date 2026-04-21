@@ -1,6 +1,7 @@
 FROM ruby:3.3.3
 RUN apt-get update -qq
 RUN apt-get install --no-install-recommends -y build-essential git libvips pkg-config nodejs npm && npm install n -g && n lts
+RUN apt-get install -y cron
 RUN npm install -g yarn
 RUN mkdir /app
 WORKDIR /app
