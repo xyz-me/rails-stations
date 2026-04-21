@@ -51,7 +51,7 @@
                 <% @reservations_ranking.each_with_index do |ranking, i| %>
                     <tr>
                         <td>
-                            <%= link_to ranking.movie.name, movies_path(ranking.movie.id)%>
+                            <%= link_to ranking.movie.name, movie_path(ranking.movie.id)%>
                         </td>
                         <td><%= ranking.total_count %></td>
                     </tr>
