@@ -1,6 +1,5 @@
 module Admin
   class SitesController < ApplicationController
-
     # サイト一覧表示
     def index
       @sites = Site.all
@@ -43,8 +42,8 @@ module Admin
       ActiveRecord::Base.transaction do
         @site = Site.find(params[:id])
         Reservation.joins(schedule: { screen: :room })
-                  .where(rooms: { site_id: @site.id })
-                  .destroy_all
+                   .where(rooms: { site_id: @site.id })
+                   .destroy_all
         Schedule.joins(screen: :room)
                 .where(rooms: { site_id: @site.id })
                 .destroy_all
@@ -54,13 +53,11 @@ module Admin
         Room.where(site_id: @site.id).destroy_all
         @site.destroy!
       end
-      
-      redirect_to admin_sites_path, notice: "削除しました"
 
-    rescue ActiveRecord::RecordInvalid => e
+      redirect_to admin_sites_path, notice: '削除しました'
+    rescue ActiveRecord::RecordInvalid
       render :new, status: :unprocessable_entity
     end
-
 
     private
 
@@ -68,6 +65,5 @@ module Admin
     def site_params
       params.require(:site).permit(:name)
     end
-    
   end
 end

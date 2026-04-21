@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     end
     resources :sites do
       resources :rooms, only: %i[index show new create edit update destroy]
-    end 
+    end
     resources :reservations, only: %i[index show new create edit update destroy]
     resources :schedules
   end

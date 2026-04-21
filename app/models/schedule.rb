@@ -6,7 +6,7 @@ class Schedule < ApplicationRecord
   has_one :screen
 
   def view_time
-    "#{start_time.strftime('%H:%M')}-#{end_time.strftime('%H:%M')} (#{screen&.room&.site&.name || "UnKnown"})"
+    "#{start_time.strftime('%H:%M')}-#{end_time.strftime('%H:%M')} (#{screen&.room&.site&.name || 'UnKnown'})"
   end
 
   def view_only_time

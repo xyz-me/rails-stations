@@ -19,8 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-require File.expand_path(File.dirname(__FILE__) + '/environment')
-
+require File.expand_path("#{File.dirname(__FILE__)}/environment")
 
 rails_env = ENV['RAILS_ENV'] || :development
 set :environment, rails_env
@@ -28,9 +27,9 @@ set :output, "#{Rails.root}/log/cron.log"
 ENV.each { |k, v| env(k, v) }
 
 every :minute do
-  rake "task_day_before:send_email"
+  rake 'task_day_before:send_email'
 end
 
 every 1.day, at: '0:00 am' do
-  rake "task_ranking:yesterday_day_reservation"
+  rake 'task_ranking:yesterday_day_reservation'
 end

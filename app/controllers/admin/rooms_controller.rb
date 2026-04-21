@@ -3,7 +3,7 @@ module Admin
     # 部屋一覧表示
     def index
       @site = Site.find(params[:site_id])
-      @rooms = Room.where(site_id:params[:site_id])
+      @rooms = Room.where(site_id: params[:site_id])
     end
 
     # 部屋追加
@@ -38,7 +38,7 @@ module Admin
         else
           render :edit, status: :unprocessable_entity
         end
-      rescue StandardError => e
+      rescue StandardError
         render :new, status: :unprocessable_entity
       end
     end
@@ -46,24 +46,21 @@ module Admin
     def destroy
       ActiveRecord::Base.transaction do
         @room = Room.find(params[:id])
-        
+
         Reservation.joins(schedule: :screen)
-              .where(screens: { room_id: @room.id })
-              .destroy_all
+                   .where(screens: { room_id: @room.id })
+                   .destroy_all
         Schedule.joins(:screen)
-              .where(screens: { room_id: @room.id })
-              .destroy_all
+                .where(screens: { room_id: @room.id })
+                .destroy_all
         Screen.where(room_id: @room.id).destroy_all
         @room.destroy!
-
       end
-      
-      redirect_to admin_site_rooms_path(params[:site_id]), notice: "削除しました"
 
-    rescue ActiveRecord::RecordInvalid => e
+      redirect_to admin_site_rooms_path(params[:site_id]), notice: '削除しました'
+    rescue ActiveRecord::RecordInvalid
       render :new, status: :unprocessable_entity
     end
-
 
     private
 
@@ -71,6 +68,5 @@ module Admin
     def room_params
       params.require(:room).permit(:screen_number)
     end
-    
   end
 end

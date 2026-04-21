@@ -1,7 +1,5 @@
 inherit_from: .rubocop_todo.yml
 
-# inherit_from: .rubocop_todo.yml
-
 AllCops:
   Include:
     - foo.unusual_extension
@@ -20,3 +18,7 @@ AllCops:
     - !ruby/regexp /old_and_unused\.rb$/
     - 'app/controllers/users/*'
     - 'spec/*'
+
+AllCops:
+  SuggestExtensions: false
+  DisabledByDefault: false

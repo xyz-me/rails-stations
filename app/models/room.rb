@@ -5,6 +5,6 @@ class Room < ApplicationRecord
   has_many :screens
 
   def screen_with_site
-    "#{screen_number} (#{site&.name || "UnKnown"})"
+    "#{screen_number} (#{site&.name || 'UnKnown'})"
   end
 end

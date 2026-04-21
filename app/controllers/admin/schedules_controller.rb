@@ -31,7 +31,7 @@ module Admin
       # @screen = Screen.new(scene_params)
       @movie = Movie.find(params[:movie_id])
       @rooms = Room.all
-      
+
       # トランザクション処理
       ActiveRecord::Base.transaction do
         @schedule = Schedule.create!(schedule_params)
